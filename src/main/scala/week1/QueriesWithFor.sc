@@ -17,9 +17,24 @@ val books = Set(
   )
 )
 
+// Query with for
 for (b <- books; a <- b.authors; if a.startsWith("Bird,")) yield b.title
+// 'for' translation scheme used by compiler
+// Step 1.
+books.flatMap(b => for (a <- b.authors; if a.startsWith("Bird,")) yield b.title)
+// Step 2.
+books.flatMap(b => for(a <- b.authors.withFilter(a => a.startsWith("Bird,"))) yield b.title)
+// Step 3.
+books.flatMap(b => b.authors.withFilter(a => a.startsWith("Bird,")).map(y => b.title))
+
+// last step of the translation above can also be written as
+books.flatMap(b => b.authors.withFilter(_.startsWith("Bird,")).map(_ => b.title))
+// and using postfix notation
+books flatMap(b => b.authors withFilter(_ startsWith "Bird,") map(_ => b.title))
 
 for (b <- books; if b.title.contains("Program")) yield b.title
+// 'for' translation
+books.withFilter(b => b.title.contains("Program")).map(b => b.title)
 
 for {
   b1 <- books; b2 <- books; if b1.title < b2.title
