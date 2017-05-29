@@ -17,7 +17,7 @@ account.withdraw(20)
 account.withdraw(20)
 //account.withdraw(15)
 
-// BankAccountProxya's are stateful objects
+// BankAccountProxy are stateful objects
 class BankAccountProxy(ba: BankAccount) {
   def deposit(amount: Int): Unit = ba.deposit(amount)
   def withdraw(amount: Int): Int = ba.withdraw(amount)
