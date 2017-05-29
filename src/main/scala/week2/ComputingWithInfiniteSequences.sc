@@ -8,7 +8,8 @@ val m4s = nat map(_ * 4)
 
 (m4s take 3).toList
 
-def sieve(s: Stream[Int]): Stream[Int] = s.head #:: sieve(s.tail filter(_ % s.head != 0))
+def sieve(s: Stream[Int]): Stream[Int] =
+  s.head #:: sieve(s.tail filter(_ % s.head != 0))
 
 // first 10 primes
 sieve(from(2)).take(10).toList
@@ -20,7 +21,8 @@ def sqrtStream(x: Double): Stream[Double] = {
 }
 sqrtStream(4).take(10).toList
 
-def isGoodEnough(guess: Double, x: Double) = math.abs((guess * guess - x) / x) < 0.0001
+def isGoodEnough(guess: Double, x: Double) =
+  math.abs((guess * guess - x) / x) < 0.0001
 
 sqrtStream(4).filter(isGoodEnough(_, 4)).take(3).toList
 
